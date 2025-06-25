@@ -1,0 +1,22 @@
+@font-face {
+    font-family: 'YourFont';
+    src: url('../js/pages/fonts/Edu_AU_VIC_WA_NT_Arrows/EduAUVICWANTArrows-VariableFont_wght.ttf'),
+}
+
+@font-face {
+    font-family: 'title';
+    src: url('../js/pages/fonts/Poetsen_One/PoetsenOne-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'text';
+    src: url('../js/pages/fonts/Poppins/Poppins-Italic.ttf');
+}
+
+body,
+html {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+    scroll-behavior: smooth;
+}
