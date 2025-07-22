@@ -23,6 +23,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('/admin', AdminController::class);
         Route::get('/admin/show/{id}', [AdminController::class, 'show']);
         Route::resource('/reservation', ReservationsController::class);
+        Route::get('/admin/reservations/{id}/contract', [ReservationsController::class, 'downloadContract'])->name('reservations.downloadContract');
     });
 
     // 👤 Manager Routes (only users with 'manager' role)

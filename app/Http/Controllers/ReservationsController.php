@@ -9,6 +9,7 @@ use Carbon\Carbon;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
+use Barryvdh\DomPDF\Facade\Pdf;
 
 
 
@@ -131,6 +132,22 @@ public function update(Request $request, $id)
 
     return redirect()->route('reservation.index')->with('success', 'Car deleted successfully.');
 }
+
+
+public function downloadContract($id)
+{
+    $reservation = Reservation::with(['car', 'user'])->findOrFail($id);
+
+    // Optional: check role or permission
+    if (!in_array(strtolower($reservation->status), ['confirmed', 'active', 'completed'])) {
+        abort(403, 'Unauthorized to download contract');
+    }
+
+    $pdf = Pdf::loadView('pdf.contract', ['reservation' => $reservation]);
+
+    return $pdf->download("contract_{$reservation->id}.pdf");
+}
+
 
     
 }

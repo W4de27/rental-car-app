@@ -7,7 +7,8 @@ import {
     Trash2, Loader2, Calendar, Phone, Clock, DollarSign, CheckCircle,
     XCircle, AlertCircle, User, Mail, Zap, BadgeCheck, Edit, ArrowUp,
     Search,
-    Filter
+    Filter,
+    FileDown
 } from 'lucide-react';
 import CountUp from 'react-countup';
 
@@ -330,47 +331,61 @@ export default function HistoryReservation({ reservations }) {
                                             </div>
                                         </div>
 
-                                        <div className="mt-6 flex flex-wrap gap-3">
-                                            <Link
-                                                href={route('reservation.edit', reservation.id)}
-                                                className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition"
-                                                onStart={() => handleEdit(reservation.id)}
-                                                onFinish={() => {
-                                                    setEditingId(null);
-                                                    toast.dismiss('edit');
-                                                }}
-                                            >
-                                                {editingId === reservation.id ? (
-                                                    <>
-                                                        <Loader2 className="animate-spin h-4 w-4 mr-2" />
-                                                        Loading...
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Edit className="h-4 w-4 mr-2" />
-                                                        Edit Reservation
-                                                    </>
-                                                )}
-                                            </Link>
+                                        <div className="mt-6 flex flex-wrap justify-between items-center gap-3">
+                                            <div className="flex flex-wrap gap-3">
+                                                <Link
+                                                    href={route('reservation.edit', reservation.id)}
+                                                    className="inline-flex items-center px-4 py-2 bg-blue-600 hover:bg-blue-700 text-white text-sm font-medium rounded-md transition"
+                                                    onStart={() => handleEdit(reservation.id)}
+                                                    onFinish={() => {
+                                                        setEditingId(null);
+                                                        toast.dismiss('edit');
+                                                    }}
+                                                >
+                                                    {editingId === reservation.id ? (
+                                                        <>
+                                                            <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                                                            Loading...
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <Edit className="h-4 w-4 mr-2" />
+                                                            Edit Reservation
+                                                        </>
+                                                    )}
+                                                </Link>
 
-                                            {reservation.status === "Completed" ? null : <button
-                                                onClick={() => handleDelete(reservation.id)}
-                                                className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition"
-                                                disabled={deletingId === reservation.id}
-                                            >
-                                                {deletingId === reservation.id ? (
-                                                    <>
-                                                        <Loader2 className="animate-spin h-4 w-4 mr-2" />
-                                                        Cancelling...
-                                                    </>
-                                                ) : (
-                                                    <>
-                                                        <Trash2 className="h-4 w-4 mr-2" />
-                                                        Cancel Reservation
-                                                    </>
+                                                {reservation.status === "Completed" ? null : (
+                                                    <button
+                                                        onClick={() => handleDelete(reservation.id)}
+                                                        className="inline-flex items-center px-4 py-2 bg-red-600 hover:bg-red-700 text-white text-sm font-medium rounded-md transition"
+                                                        disabled={deletingId === reservation.id}
+                                                    >
+                                                        {deletingId === reservation.id ? (
+                                                            <>
+                                                                <Loader2 className="animate-spin h-4 w-4 mr-2" />
+                                                                Cancelling...
+                                                            </>
+                                                        ) : (
+                                                            <>
+                                                                <Trash2 className="h-4 w-4 mr-2" />
+                                                                Cancel Reservation
+                                                            </>
+                                                        )}
+                                                    </button>
                                                 )}
-                                            </button>}
+                                            </div>
 
+                                            {/* Download PDF Button - Right Aligned */}
+                                            {reservation.status === "Pending" || reservation.status === "Cancelled" ? null : (
+                                                <button
+                                                    onClick={() => window.open(route('reservations.downloadContract', reservation.id), '_blank')}
+                                                    className="inline-flex items-center px-4 py-2 bg-emerald-600 hover:bg-emerald-700 text-white text-sm font-medium rounded-md transition shadow-sm"
+                                                >
+                                                    <FileDown className="h-4 w-4 mr-2" />
+                                                    Download Contract
+                                                </button>
+                                            )}
 
                                         </div>
                                     </div>

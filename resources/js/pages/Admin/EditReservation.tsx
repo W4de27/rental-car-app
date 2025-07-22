@@ -193,7 +193,7 @@ export default function EditReservation({ reservation, car, user }) {
                         Reservation Details
                     </h2>
 
-                    <form onSubmit={handleSubmit} className="space-y-3">
+                    <form onSubmit={handleSubmit} className="space-y-3 ">
                         {/* Phone */}
                         <div>
                             <label className="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
